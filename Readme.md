@@ -1,4 +1,4 @@
-# Make your app material project
+# Make your app material
 
 ## Project Overview
 In this project, you redesigned an app to follow the Material Design guidelines and translate a set of static design mocks to a living and breathing app.
