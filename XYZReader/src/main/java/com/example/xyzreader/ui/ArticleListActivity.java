@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -152,8 +154,15 @@ public class ArticleListActivity extends ActionBarActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Pair[] pairs = new Pair[3];
+                    pairs[0] = new Pair(view.findViewById(R.id.thumbnail),"image");
+                    pairs[1] = new Pair(view.findViewById(R.id.article_title),"title");
+                    pairs[2] = new Pair(view.findViewById(R.id.article_subtitle),"subtitle");
+                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                            ArticleListActivity.this,pairs).toBundle();
+
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))),bundle);
                 }
             });
             return vh;
@@ -187,7 +196,7 @@ public class ArticleListActivity extends ActionBarActivity implements
             String author = mCursor.getString(ArticleLoader.Query.AUTHOR);
             String image = mCursor.getString(ArticleLoader.Query.THUMB_URL);
             holder.titleView.setText(title);
-            holder.subtitleView.setText(subtitle);
+            holder.subtitleView.setText(subtitle+ " by "+ author);
             //holder.authorView.setText(author);
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
 
@@ -222,12 +231,14 @@ public class ArticleListActivity extends ActionBarActivity implements
         public DynamicHeightNetworkImageView thumbnailView;
         public TextView titleView;
         public TextView subtitleView;
+        public TextView authorView;
 
         public ViewHolder(View view) {
             super(view);
             thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
             titleView = (TextView) view.findViewById(R.id.article_title);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+            authorView = (TextView) view.findViewById(R.id.article_author);
         }
     }
 }

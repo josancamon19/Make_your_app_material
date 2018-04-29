@@ -29,6 +29,7 @@
 
                 <ImageView
                     android:id="@+id/photo"
+                    android:transitionName="image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
@@ -37,9 +38,10 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/photo_background_protection" />
+                    android:background="@drawable/scrim" />
 
                 <LinearLayout
+                    android:id="@+id/meta_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -57,14 +59,16 @@
                         android:lineSpacingMultiplier="0.9"
                         android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
                         android:textColor="@color/light_gray"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:transitionName="title"/>
 
                     <TextView
                         android:id="@+id/article_byline"
                         style="?android:attr/textAppearanceSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/light_gray" />
+                        android:textColor="@color/light_gray"
+                        android:transitionName="subtitle"/>
                 </LinearLayout>
 
             </FrameLayout>
@@ -86,15 +90,15 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/details_text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:transitionGroup="true">
+            <!--- style="?android:attr/textAppearanceMedium"-->
 
             <TextView
                 android:id="@+id/article_body"
-                style="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -119,8 +123,6 @@
         app:fabSize="normal"
         android:src="@drawable/ic_share"
         android:contentDescription="@string/action_share"
-        android:clickable="true"
-        android:background="@drawable/ic_share"
         app:elevation="@dimen/fab_elevation"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right"
