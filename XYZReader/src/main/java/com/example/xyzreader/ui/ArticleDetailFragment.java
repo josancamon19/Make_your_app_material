@@ -7,15 +7,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
@@ -35,6 +28,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -113,21 +111,10 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.frarticledetail, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
-        mPhotoView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                mPhotoView.getViewTreeObserver().removeOnPreDrawListener(this);
-                mRootView.findViewById(R.id.article_title).getViewTreeObserver().removeOnPreDrawListener(this);
-                mRootView.findViewById(R.id.article_byline).getViewTreeObserver().removeOnPreDrawListener(this);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getActivity().startPostponedEnterTransition();
-                }
-                return true;
-            }
-        });
+
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
         mStatusBarColorDrawable = new ColorDrawable(0);
@@ -196,7 +183,6 @@ public class ArticleDetailFragment extends Fragment implements
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
-
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
@@ -243,12 +229,25 @@ public class ArticleDetailFragment extends Fragment implements
 
                         }
                     });
+
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
+        mPhotoView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mPhotoView.getViewTreeObserver().removeOnPreDrawListener(this);
+                mRootView.findViewById(R.id.article_title).getViewTreeObserver().removeOnPreDrawListener(this);
+                mRootView.findViewById(R.id.article_byline).getViewTreeObserver().removeOnPreDrawListener(this);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().startPostponedEnterTransition();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
