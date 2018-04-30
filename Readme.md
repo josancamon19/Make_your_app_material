@@ -16,7 +16,7 @@ Through this project, I:
 
 ## Screens
 
-![screen](../master/images/main.png)  ![screen](../master/images/detail.png)
+![screen](../master/images/main1.png)  ![screen](../master/images/detail1.png)
    
 ## Android Developer Nanodegree
 [![udacity][1]][2]
